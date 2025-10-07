@@ -3,17 +3,406 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PLCs - Estructura de Internet</title>
+  <title>PLCs — Historia y Línea del Tiempo</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    body{font-family:Inter,Arial;margin:40px;background:#f7f7fb;color:#222}
-    header{background:#2b6cb0;color:white;padding:18px;border-radius:8px}
-    main{margin-top:20px}
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220; 
+      --muted:#98a0b3;
+      --accent1: linear-gradient(135deg,#00d4ff 0%,#6d5cff 100%);
+      --glass: rgba(255,255,255,0.03);
+      --accent-color: #6d5cff;
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 500px at 10% 10%, rgba(109,92,255,0.12), transparent 8%),
+                  radial-gradient(1000px 400px at 90% 90%, rgba(0,212,255,0.06), transparent 6%),
+                  var(--bg);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+    }
+
+    /* Container */
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+    }
+
+    /* HERO */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:28px;
+      box-shadow: 0 8px 30px rgba(5,7,15,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .hero-top{
+      display:flex;
+      gap:20px;
+      align-items:center;
+    }
+    .plc-image{
+      width:120px;
+      height:150px;
+      border-radius:12px;
+      object-fit:cover;
+      flex-shrink:0;
+      background: linear-gradient(135deg,#0b1220,#111827);
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,0.04);
+      overflow:hidden;
+    }
+    .plc-image img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-title{
+      flex:1;
+    }
+    .hero-title h1{
+      margin:0;
+      font-size:1.45rem;
+      letter-spacing:-0.4px;
+    }
+    .hero-title p{margin:8px 0 0;color:var(--muted);font-size:0.95rem}
+
+    .hero-meta{
+      display:flex;
+      gap:12px;
+      margin-top:18px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .pill{
+      padding:8px 12px;
+      background:var(--glass);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:0.9rem;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* TIMELINE */
+		/* WebKit (Chrome, Edge, Safari) */
+		.timeline-card::-webkit-scrollbar {
+			width: 12px;             /* grosor de la barra */
+		}
+
+		.timeline-card::-webkit-scrollbar-track {
+			background: rgba(255,255,255,0.02); /* pista (fondo) */
+			border-radius: 12px;
+			margin: 8px 0;           /* separación top/bottom para dar "aire" */
+		}
+
+		.timeline-card::-webkit-scrollbar-thumb {
+			background: linear-gradient(180deg, #6d5cff, #00d4ff); /* thumb con degradado */
+			border-radius: 10px;
+			border: 2px solid rgba(11,18,32,0.5); /* crea un borde sutil */
+			min-height: 40px;        /* evita thumb demasiado pequeño */
+		}
+
+		.timeline-card::-webkit-scrollbar-thumb:hover {
+			transform: scale(1.03);
+			opacity: 0.95;
+		}
+
+    .timeline-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:18px;
+      height: calc(100vh - 140px);
+      overflow:auto;
+      border: 1px solid rgba(255,255,255,0.03);
+			scrollbar-width: thin; /* 'auto' | 'thin' | 'none' */
+			scrollbar-color: rgba(109,92,255,0.92) rgba(255,255,255,0.02);
+    }
+		
+    .timeline-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:12px;
+    }
+    .timeline-header h2{margin:0;font-size:1.05rem}
+    .timeline {
+      position:relative;
+      padding-left:42px;
+      margin:8px 0 32px;
+    }
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:18px;
+      top:0;
+      bottom:0;
+      width:4px;
+      background: linear-gradient(to bottom, rgba(109,92,255,0.12), rgba(0,212,255,0.08));
+      border-radius:4px;
+    }
+    .event{
+      position:relative;
+      margin:18px 0;
+      padding:10px 14px;
+      background: rgba(255,255,255,0.02);
+      border-radius:12px;
+      transition:transform .28s ease, box-shadow .28s ease;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .event:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .event:focus{outline:3px solid rgba(109,92,255,0.18)}
+    .event .dot{
+      position:absolute;
+      left:-32px;
+      top:8px;
+      width:44px;height:44px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,#081024,rgba(109,92,255,0.12));
+      border: 1px solid rgba(255,255,255,0.04);
+      font-weight:700;
+      color: #cfe9ff;
+      box-shadow: 0 6px 18px rgba(13,23,42,0.6);
+    }
+    .event h3{margin:0;font-size:0.98rem;color:#6d7b93;}
+    .event time{display:block;margin-top:6px;color:var(--muted);font-size:0.86rem}
+    .event p{margin:10px 0 0;color:#c9d7ee;line-height:1.4}
+
+    /* DETAILS PANEL */
+    .details{
+      margin-top:12px;
+      padding:14px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border:1px solid rgba(255,255,255,0.02);
+      color:#dfeefd;
+    }
+    .details h3{margin:0 0 8px}
+    .details p{margin:0;color:var(--muted)}
+    .small{font-size:0.88rem;color:var(--muted);margin-top:10px}
+
+    /* CTA */
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      background:var(--accent1);
+      color:white;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 8px 30px rgba(109,92,255,0.12);
+    }
+
+    /* Footer */
+    footer{grid-column:1 / -1;margin-top:22px;text-align:center;color:var(--muted);font-size:0.9rem}
+    footer a{color:inherit;text-decoration:none;font-weight:600;color:var(--accent-color)}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr; padding:0 8px}
+      .timeline-card{height:auto}
+    }
   </style>
 </head>
+
 <body>
-  <header><h1>Mi primera página en Azure Static Web Apps</h1></header>
-  <main>
-    <p>Publicada desde el repo <strong>PLCs-Estructura-de-Internet-Servicios-y-Servidores</strong>.</p>
-  </main>
+  <div class="container" role="main">
+    <!-- HERO / LEFT -->
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-top">
+        <div class="plc-image" aria-hidden="false" title="Imagen PLC DVP-14SS2">
+          <img src="PLCImage.png" alt="Imagen de un PLC (reemplaza la ruta)" id="plcImg">
+        </div>
+
+        <div class="hero-title">
+          <h1 id="title">Controladores Lógicos Programables (PLC)</h1>
+          <p>Una línea del tiempo interactiva con los hitos más relevantes en la historia de los PLC</p>
+
+          <div class="hero-meta" aria-hidden="false">
+            <span class="pill">Trabajo académico</span>
+            <span class="pill">Estructura de Internet, Servicios y Servidores</span>
+            <a class="cta" href="#timeline" onclick="document.getElementById('timeline').focus();return false;">Ver la línea del tiempo</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;color:var(--muted);line-height:1.6">
+        <p><strong>Tecnologias</strong> <code>__ HTML / CSS / JS puro</code></p>
+      </div>
+
+      <div style="margin-top:18px;background:rgba(255,255,255,0.01);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
+        <strong>¿Por qué ha sido una pieza clave en la historia?</strong>
+        <p class="small">Los PLCs revolucionaron la industria al permitir una <strong><code>automatización</code></strong> fiable y flexible: sustituyeron paneles de relés por <strong><code>controladores reprogramables</code></strong>, facilitando cambios, reduciendo errores y acelerando la puesta en marcha. Además mejoraron la fiabilidad y el mantenimiento, disminuyendo paradas y costes, y posibilitaron la <strong><code>integración con redes, SCADA e IoT para modernizar y escalar procesos</code></strong>.</p>
+      </div>
+    </section>
+
+    <!-- TIMELINE / RIGHT -->
+    <aside class="timeline-card" aria-labelledby="timelineTitle">
+      <div class="timeline-header">
+        <h2 id="timelineTitle">Línea del tiempo Hitos clave</h2>
+        <div class="small">Interactúa con los hitos para ver más detalle.</div>
+      </div>
+
+      <nav id="timeline" class="timeline" tabindex="0" aria-label="Línea del tiempo de los PLCs">
+        <!-- Eventos inyectados por JS -->
+      </nav>
+
+      <div id="detail" class="details" aria-live="polite">
+        <h3>Selecciona un hito</h3>
+        <p class="small">Aquí aparecerán los detalles históricos del hito seleccionado.</p>
+      </div>
+    </aside>
+
+    <footer>
+      <div>Landing page creada por <strong>Miguel A. Rayo</strong> y <strong>Juan F. Guerrero</strong> en Microsoft Azure | &#169; 2025</div>
+    </footer>
+  </div>
+
+  <script>
+    // ======= Datos de la línea del tiempo =======
+    const timelineData = [
+      {
+        id: 't1',
+        year: '1968–1969',
+        title: 'Nacimiento del PLC — Modicon y Dick Morley',
+        text: 'A finales de los años 60, Richard E. "Dick" Morley y otros ingenieros desarrollaron la idea del controlador programable para reemplazar paneles de relés en la industria. Modicon (uno de los primeros fabricantes) introdujo el Modicon 084, considerado entre los primeros PLC comerciales.',
+        source: 'Historial industrial y publicaciones sobre la historia del PLC'
+      },
+      {
+        id: 't2',
+        year: '1979',
+        title: 'Modbus — protocolo de comunicación',
+        text: 'Modbus, creado por Modicon en 1979, se convirtió en uno de los protocolos de comunicación industrial más utilizados para interconectar PLCs, HMIs y controladores.',
+        source: 'Documentación de protocolos industriales'
+      },
+      {
+        id: 't3',
+        year: '1970s–1980s',
+        title: 'Adopción y expansión',
+        text: 'Durante las décadas de 1970 y 1980, los PLCs se difundieron ampliamente en la manufactura (automotriz, alimentaria y más). Aparecieron muchos proveedores como Siemens, Allen-Bradley y Omron con líneas dedicadas de PLCs.',
+        source: 'Evolución del mercado industrial'
+      },
+      {
+        id: 't4',
+        year: '1989',
+        title: 'PROFIBUS y fieldbus',
+        text: 'Aparecieron estándares de campo (fieldbus) como PROFIBUS hacia finales de los 80, permitiendo redes de sensores y actuadores integradas y más eficientes en entornos industriales.',
+        source: 'Estándares de comunicación industrial'
+      },
+      {
+        id: 't5',
+        year: '1993',
+        title: 'IEC 61131-3 — Estándar de programación',
+        text: 'La norma IEC 61131-3, publicada en los años 90, definió lenguajes de programación estandarizados para PLCs (Ladder Diagram, Function Block Diagram, Structured Text, Instruction List y Sequential Function Chart).',
+        source: 'Norma IEC 61131-3'
+      },
+      {
+        id: 't6',
+        year: '2000s',
+        title: 'Ethernet industrial y convergencia IT/OT',
+        text: 'Con la llegada del Ethernet industrial (EtherNet/IP, PROFINET, etc.) los PLCs se integraron con redes empresariales y sistemas SCADA, facilitando la trazabilidad y control remoto.',
+        source: 'Tendencias de redes industriales'
+      },
+      {
+        id: 't7',
+        year: '2010s',
+        title: 'IoT y Edge — PLCs conectados',
+        text: 'Los PLCs evolucionaron hacia arquitecturas más abiertas, con capacidades IoT, conectividad a la nube y computación en el borde (edge), permitiendo análisis y mantenimiento predictivo.',
+        source: 'Transformación digital industrial'
+      },
+      {
+        id: 't8',
+        year: '2020s',
+        title: 'Ciberseguridad y sistemas inteligentes',
+        text: 'Hoy el enfoque está en la seguridad, interoperabilidad y sistemas inteligentes. Los PLCs modernos integran medidas de ciberseguridad, virtualización y orquestación en entornos industriales 4.0.',
+        source: 'Tendencias recientes'
+      }
+    ];
+
+    // ======= Funciones para renderizar =======
+    const timelineRoot = document.getElementById('timeline');
+    const detail = document.getElementById('detail');
+
+    function renderTimeline(){
+      timelineRoot.innerHTML = '';
+      timelineData.forEach((item, idx) => {
+        const ev = document.createElement('button');
+        ev.className = 'event';
+        ev.setAttribute('role','button');
+        ev.setAttribute('aria-controls','detail');
+        ev.setAttribute('data-id',item.id);
+        ev.innerHTML = `
+          <span class="dot" aria-hidden="true">${idx+1}</span>
+          <h3>${escapeHtml(item.title)}</h3>
+          <time>${escapeHtml(item.year)}</time>
+          <p>${escapeHtml(item.text).slice(0,150)}${item.text.length>150?'…':''}</p>
+        `;
+        // click handler
+        ev.addEventListener('click', () => selectEvent(item.id, ev));
+        // keyboard accessibility: enter/space
+        ev.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ev.click(); }
+        });
+        timelineRoot.appendChild(ev);
+      });
+    }
+
+    function selectEvent(id, node){
+      const item = timelineData.find(t => t.id === id);
+      if(!item) return;
+      // highlight selected
+      document.querySelectorAll('.event').forEach(el => el.style.boxShadow = '');
+      node.style.boxShadow = '0 14px 40px rgba(13,23,42,0.7), 0 0 0 4px rgba(109,92,255,0.06)';
+      // fill details panel
+      detail.innerHTML = `
+        <h3>${escapeHtml(item.title)} <span style="color:var(--muted);font-weight:600;font-size:0.85rem"> — ${escapeHtml(item.year)}</span></h3>
+        <p style="margin-top:8px">${escapeHtml(item.text)}</p>
+        <p class="small" style="margin-top:12px">Fuente: ${escapeHtml(item.source)}</p>
+      `;
+      // smooth scroll into view for small screens
+      detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+
+    // small helper to avoid DOM injection (basic)
+    function escapeHtml(str){
+      if(!str) return '';
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+
+    // init
+    renderTimeline();
+
+    // Select first event by default after render
+    setTimeout(()=> {
+      const firstBtn = document.querySelector('.event');
+      if(firstBtn) firstBtn.click();
+    }, 200);
+
+    // Optional: keyboard shortcut to focus timeline (press "t")
+    document.addEventListener('keydown', (e) => {
+      if(e.key.toLowerCase() === 't' && !/input|textarea/i.test(document.activeElement.tagName)){
+        e.preventDefault();
+        document.getElementById('timeline').focus();
+      }
+    });
+  </script>
 </body>
 </html>
